@@ -29,7 +29,7 @@ class TaskController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Task $task)
     {
         // 3️⃣
         $validated = $request->validate([
@@ -39,6 +39,14 @@ class TaskController extends Controller
             'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
         ]);
+
+        // update
+        $task->create($validated);
+        // redirect
+        return redirect()->route('tasks.index')->with('success', 'Task Created');
+
+
+
     }
 
     /**
