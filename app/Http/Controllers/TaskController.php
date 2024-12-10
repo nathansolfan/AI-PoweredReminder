@@ -31,7 +31,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // 3️⃣
+        $validated = $request->validate([
+            'title' => 'required',
+            'description' => 'nullable',
+            'status' => 'required|in:pending, completed',
+            'priority' => 'required|in:low,medium,high',
+            'deadline' => 'nullable|date',
+        ]);
     }
 
     /**
