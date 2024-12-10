@@ -11,7 +11,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        // 1️⃣ Show all tasks
     }
 
     /**
@@ -19,7 +19,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        // 2️⃣
+        return view('')
     }
 
     /**
