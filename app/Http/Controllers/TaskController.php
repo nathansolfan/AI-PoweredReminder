@@ -44,17 +44,15 @@ class TaskController extends Controller
         $task->create($validated);
         // redirect
         return redirect()->route('tasks.index')->with('success', 'Task Created');
-
-
-
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Task $task)
     {
-        //
+        // 4️⃣
+        return view('tasks.show', ['task' => $task]);
     }
 
     /**
