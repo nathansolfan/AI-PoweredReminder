@@ -32,6 +32,7 @@ class TaskController extends Controller
     public function store(Request $request, Task $task)
     {
         // 3️⃣
+
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',
@@ -70,6 +71,7 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         // 6️⃣
+
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',

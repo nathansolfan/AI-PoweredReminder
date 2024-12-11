@@ -43,6 +43,15 @@
                         </div>
 
                         <div class="mb-4">
+                            <label for="status" class="block font-medium text-sm text-gray-700">Status</label>
+                            <select name="status" id="status" class="block mt-1 w-full">
+                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
+                            </select>
+                        </div>
+
+
+                        <div class="mb-4">
                             <label for="deadline" class="block font-medium text-sm text-gray-700">Deadline</label>
                             <input type="datetime-local" name="deadline" id="deadline" class="block mt-1 w-full" value="{{ old('deadline') }}" />
                         </div>
