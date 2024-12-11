@@ -7,26 +7,38 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <a href="{{ route('tasks.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">Create Task</a>
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">Task List</h3>
+                        <a href="{{ route('tasks.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">+ New Task</a>
+                    </div>
 
-                    <ul>
-                        @foreach($tasks as $task)
-                            <li class="mb-4">
-                                <strong>{{ $task->title }}</strong> - {{ $task->status }} - Priority: {{ $task->priority }}
-                                <div class="mt-2">
-                                    <a href="{{ route('tasks.edit', $task->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded">Edit</a>
-                                    <a href="{{ route('tasks.show', $task->id) }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-3 rounded">View</a>
-                                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded">Delete</button>
-                                    </form>
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                    @if ($tasks->isEmpty())
+                        <p class="text-gray-600 dark:text-gray-400">No tasks available. Start by creating one!</p>
+                    @else
+                        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                            @foreach($tasks as $task)
+                                <li class="py-4">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h4 class="text-md font-bold text-gray-900 dark:text-white">{{ $task->title }}</h4>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Status: {{ ucfirst($task->status) }} | Priority: {{ ucfirst($task->priority) }}</p>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="px-3 py-1 text-yellow-500 bg-yellow-100 rounded-md hover:bg-yellow-200">Edit</a>
+                                            <a href="{{ route('tasks.show', $task->id) }}" class="px-3 py-1 text-green-500 bg-green-100 rounded-md hover:bg-green-200">View</a>
+                                            <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="px-3 py-1 text-red-500 bg-red-100 rounded-md hover:bg-red-200">Delete</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
