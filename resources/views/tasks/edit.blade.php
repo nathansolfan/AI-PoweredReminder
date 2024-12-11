@@ -45,8 +45,9 @@
 
                         <div>
                             <label for="deadline" class="block font-medium text-sm text-gray-700">Deadline</label>
-                            <input type="datetime-local" name="deadline" id="deadline" value="{{ $task->deadline }}" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
+                            <input type="date" name="deadline" id="deadline" value="{{ old('deadline', $task->deadline ? \Carbon\Carbon::parse($task->deadline)->toDateString() : '') }}" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" />
                         </div>
+
 
                         <div class="flex justify-end">
                             <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">

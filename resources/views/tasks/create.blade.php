@@ -51,7 +51,7 @@
 
                         <div>
                             <label for="deadline" class="block font-medium text-sm text-gray-700">Deadline</label>
-                            <input type="datetime-local" name="deadline" id="deadline" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" value="{{ old('deadline') }}" />
+                            <input type="date" name="deadline" id="deadline" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" value="{{ old('deadline') }}" />
                         </div>
 
                         <div class="flex justify-end">
