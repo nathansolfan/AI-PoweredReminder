@@ -53,8 +53,14 @@ class TaskController extends Controller
             $validated['description'] = generateAIDescription($validated['title'], $validated['deadline']);
         }
 
-        // update
-        $task->create($validated);
+        // Create the task - $task->create($validated);
+        $task = Task::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'status' => $validated['status'],
+            'priority' => $validated['priority'],
+            'deadline' => $validated['deadline'],
+    ]);
         // redirect
         return redirect()->route('tasks.index')->with('success', 'Task Created');
     }

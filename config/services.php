@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    // Add this for OpenAI
+    'openai' => [
+        'api_key' => env('OPENAI_API_KEY'), // This references the API key in .env
+    ],
+
 ];
