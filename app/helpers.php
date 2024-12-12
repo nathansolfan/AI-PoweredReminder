@@ -12,7 +12,14 @@ if (!function_exists('generateAIDescription')) {
      */
     function generateAIDescription(string $taskTitle, ?string $deadline = null): string
     {
-        $client = \OpenAI::client(config('services.openai.api_key'));
+        $apiKey = config('services.openai.api_key');
+
+        // Verify API key
+        if (empty($apiKey)) {
+            throw new \Exception('OpenAI API key is missing');
+        }
+
+        $client = \OpenAI::client($apiKey);
 
         $prompt = "Here is a task: '{$taskTitle}'. The deadline is: '{$deadline}'. Generate a creative and concise description for this task.";
 
@@ -24,6 +31,7 @@ if (!function_exists('generateAIDescription')) {
             ],
         ]);
 
-        return $response->choices[0]['message']['content'];
+        // Adjust this to correctly extract the response content
+        return $response->choices[0]->message->content ?? 'Default description';
     }
 }
