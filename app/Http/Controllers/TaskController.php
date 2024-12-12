@@ -8,6 +8,14 @@ use OpenAI\Client;
 
 class TaskController extends Controller
 {
+    // OPENAI __CONSTRUCT
+    public function __construct()
+    {
+        $this->openAIClient = \OpenAI::client(config('services.openai.api.key'));
+    }
+
+
+
     /**
      * Display a listing of the resource.
      */
