@@ -41,7 +41,6 @@ class TaskController extends Controller
     public function store(Request $request, Task $task)
     {
         // 3️⃣
-
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',
@@ -49,6 +48,10 @@ class TaskController extends Controller
             'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
         ]);
+
+        if (empty($validated['description'])) {
+            $validated['description'] = generateAIDescription($validated['title'], $validated['deadline']);
+        }
 
         // update
         $task->create($validated);
