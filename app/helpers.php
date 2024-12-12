@@ -30,6 +30,8 @@ if (!function_exists('generateAIDescription')) {
                 ['role' => 'user', 'content' => $prompt],
             ],
         ]);
+        dd($response->choices[0]['message']['content']);
+
 
         return $response->choices[0]['message']['content'];
     }
