@@ -8,14 +8,8 @@ use OpenAI\Client;
 
 class TaskController extends Controller
 {
-    // // OPENAI __CONSTRUCT
-    // public function __construct()
-    // {
-    //     $this->openAIClient = \OpenAI::client(config('services.openai.api.key'));
-    // }
 
-
-
+    // EXTRA FUNCTIONS AT THE BOTTOM
     /**
      * Display a listing of the resource.
      */
@@ -112,5 +106,16 @@ class TaskController extends Controller
         //7️⃣
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted');
+    }
+
+    public function toggleStatus(Task $task)
+    {
+        // $variable = (condition) ? value_if_true : value_if_false;
+        $task->status = $task->status === 'pending' ? 'completed' : 'pending';
+
+        $task->save();
+
+        return redirect()->route('tasks.index')->with('success', 'Task status has been updated');
+
     }
 }
