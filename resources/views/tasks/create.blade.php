@@ -32,14 +32,14 @@
                             <textarea name="description" id="description" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">{{ old('description') }}</textarea>
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <label for="priority" class="block font-medium text-sm text-gray-700">Priority</label>
                             <select name="priority" id="priority" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
                                 <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
                                 <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
                                 <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
                             </select>
-                        </div>
+                        </div> --}}
 
                         <div>
                             <label for="status" class="block font-medium text-sm text-gray-700">Status</label>

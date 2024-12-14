@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tasks', function (Blueprint $table) {
-            //
+            // Add category column
+            $table->string('category')->nullable();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('tasks', function (Blueprint $table) {
             //
+            $table->dropColumn('category');
         });
     }
 };
