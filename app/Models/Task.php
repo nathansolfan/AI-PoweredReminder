@@ -10,7 +10,8 @@ class Task extends Model
         'title',
         'description',
         'status',
-        'priority',
-        'deadline'
+        // 'priority',
+        'deadline',
+        'category'
     ];
 }

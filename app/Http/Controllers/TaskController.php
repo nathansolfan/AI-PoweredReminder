@@ -45,8 +45,9 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'nullable',
             'status' => 'required|in:pending, completed',
-            'priority' => 'required|in:low,medium,high',
+            // 'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
+            'category' => 'nullable|string'
         ]);
 
         if (empty($validated['description'])) {
