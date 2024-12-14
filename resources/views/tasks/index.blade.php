@@ -1,37 +1,64 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+        <h2 class="font-semibold text-2xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Tasks') }}
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg">
+            <div class="bg-white dark:bg-gray-900 shadow overflow-hidden sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-medium text-gray-800 dark:text-gray-200">Task List</h3>
-                        <a href="{{ route('tasks.create') }}" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">+ New Task</a>
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Task List</h3>
+                        <a href="{{ route('tasks.create') }}" class="inline-flex items-center px-4 py-2 bg-teal-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition ease-in-out duration-150">+ New Task</a>
                     </div>
 
                     @if ($tasks->isEmpty())
-                        <p class="text-gray-600 dark:text-gray-400">No tasks available. Start by creating one!</p>
+                        <div class="flex justify-center items-center py-10">
+                            <p class="text-lg text-gray-500 dark:text-gray-400">No tasks available. Start by creating one!</p>
+                        </div>
                     @else
-                        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+                        <ul class="divide-y divide-gray-300 dark:divide-gray-700">
                             @foreach($tasks as $task)
-                                <li class="py-4">
+                                <li class="py-6">
                                     <div class="flex justify-between items-center">
                                         <div>
-                                            <h4 class="text-md font-bold text-gray-900 dark:text-white">{{ $task->title }}</h4>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Status: {{ ucfirst($task->status) }} | Category: {{ $task->category ?? 'Uncategorized' }}</p>
+                                            <h4 class="text-lg font-bold {{ $task->deadline && $task->deadline < now() ? 'text-red-500' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'text-yellow-500' : 'text-gray-900 dark:text-white') }}">
+                                                {{ $task->title }}
+                                            </h4>
+                                            <p class="mt-2 text-sm text-gray-700 dark:text-gray-300">
+                                                <strong>Status:</strong> <span class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
+                                                    {{ ucfirst($task->status) }}
+                                                </span>
+                                                <strong class="ml-4">Category:</strong> <span class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-sky-200 text-sky-800">
+                                                    {{ $task->category ?? 'Uncategorized' }}
+                                                </span>
+                                            </p>
                                         </div>
-                                        <div class="flex items-center space-x-2">
-                                            <a href="{{ route('tasks.edit', $task->id) }}" class="px-3 py-1 text-yellow-500 bg-yellow-100 rounded-md hover:bg-yellow-200">Edit</a>
-                                            <a href="{{ route('tasks.show', $task->id) }}" class="px-3 py-1 text-green-500 bg-green-100 rounded-md hover:bg-green-200">View</a>
+                                        <div class="flex items-center space-x-4">
+                                            <form action="{{ route('tasks.toggleStatus', $task->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white {{ $task->status === 'pending' ? 'bg-teal-600 hover:bg-teal-700' : 'bg-gray-700 hover:bg-gray-800' }} border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                                    {{ $task->status === 'pending' ? 'Mark as Completed' : 'Reopen Task' }}
+                                                </button>
+                                            </form>
+
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-amber-500 hover:bg-amber-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500">
+                                                Edit
+                                            </a>
+
+                                            <a href="{{ route('tasks.show', $task->id) }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-sky-500 hover:bg-sky-600 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500">
+                                                View
+                                            </a>
+
                                             <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this task?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-3 py-1 text-red-500 bg-red-100 rounded-md hover:bg-red-200">Delete</button>
+                                                <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
+                                                    Delete
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
