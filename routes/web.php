@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 // TASK Route
 
 Route::resource('tasks', TaskController::class);
-Route::patch('/tasks/{$task}/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
+Route::patch('/tasks/{task}/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
 
 require __DIR__.'/auth.php';
 
