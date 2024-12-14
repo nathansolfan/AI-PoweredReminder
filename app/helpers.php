@@ -13,8 +13,6 @@ if (!function_exists('generateAIDescription')) {
     function generateAIDescription(string $taskTitle, ?string $deadline = null): string
     {
         $apiKey = config('services.openai.api_key');
-
-        // Verify API key
         if (empty($apiKey)) {
             throw new \Exception('OpenAI API key is missing');
         }
