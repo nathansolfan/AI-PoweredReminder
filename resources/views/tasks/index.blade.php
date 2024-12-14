@@ -23,7 +23,7 @@
                                     <div class="flex justify-between items-center">
                                         <div>
                                             <h4 class="text-md font-bold text-gray-900 dark:text-white">{{ $task->title }}</h4>
-                                            <p class="text-sm text-gray-600 dark:text-gray-400">Status: {{ ucfirst($task->status) }} | Priority: {{ ucfirst($task->priority) }}</p>
+                                            <p class="text-sm text-gray-600 dark:text-gray-400">Status: {{ ucfirst($task->status) }} | Category: {{ $task->category ?? 'Uncategorized' }}</p>
                                         </div>
                                         <div class="flex items-center space-x-2">
                                             <a href="{{ route('tasks.edit', $task->id) }}" class="px-3 py-1 text-yellow-500 bg-yellow-100 rounded-md hover:bg-yellow-200">Edit</a>

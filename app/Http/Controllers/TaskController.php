@@ -59,8 +59,9 @@ class TaskController extends Controller
             'title' => $validated['title'],
             'description' => $validated['description'],
             'status' => $validated['status'],
-            'priority' => $validated['priority'],
+            // 'priority' => $validated['priority'],
             'deadline' => $validated['deadline'],
+            'category' => $validated['category'],
     ]);
         // redirect
         return redirect()->route('tasks.index')->with('success', 'Task Created');
