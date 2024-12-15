@@ -5,9 +5,9 @@ use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 
-// Route::get('/', function () {
-//     return view('dashboard');
-// })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('tasks', TaskController::class);
 Route::patch('/tasks/{task}/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
-Route::get('/tasks/overview', [TaskController::class, 'overview'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/overview', [TaskController::class, 'overview'])->name('overview');
 
 require __DIR__.'/auth.php';
 
