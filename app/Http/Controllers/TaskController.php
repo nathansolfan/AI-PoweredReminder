@@ -119,7 +119,7 @@ class TaskController extends Controller
         return redirect()->route('tasks.index')->with('success', 'Task status has been updated');
     }
 
-    public function dashboard()
+    public function overview()
     {
         // fetch overdue/today/upcoming
         $overdueTasks = Task::where('deadline', '<', now())->whereNotNull('deadline')->get();

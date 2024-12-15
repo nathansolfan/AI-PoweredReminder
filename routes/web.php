@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function () {
 
 Route::resource('tasks', TaskController::class);
 Route::patch('/tasks/{task}/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
-Route::get('/', [TaskController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/tasks/overview', [TaskController::class, 'overview'])->middleware(['auth', 'verified'])->name('dashboard');
 
 require __DIR__.'/auth.php';
 
