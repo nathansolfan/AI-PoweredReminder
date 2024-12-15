@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use OpenAI\Client;
 
 class TaskController extends Controller
@@ -116,6 +117,18 @@ class TaskController extends Controller
         $task->save();
 
         return redirect()->route('tasks.index')->with('success', 'Task status has been updated');
+    }
 
+    public function dashboard()
+    {
+        // fetch overdue/today/upcoming
+        $overdueTasks = Task::where('deadline', '<', now())->whereNotNull('deadline')->get();
+
+        $todayTasks = Task::whereDate('deadline', now())->get();
+
+        $upcomingTasks = Task::whereBetween('deadline', [now(), now()->addDays(7)])->get();
+
+        // Count tasks by category
+        $categoryCounts = Task::select('category', DB::raw('count(*) as total'))->groupBy('category')->get();
     }
 }
