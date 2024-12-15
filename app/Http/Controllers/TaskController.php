@@ -130,5 +130,7 @@ class TaskController extends Controller
 
         // Count tasks by category
         $categoryCounts = Task::select('category', DB::raw('count(*) as total'))->groupBy('category')->get();
+
+        return view('dashboard', compact('overdueTasks','todayTasks','upcomingTasks', 'categoryCounts'));
     }
 }
