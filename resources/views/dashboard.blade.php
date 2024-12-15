@@ -3,20 +3,10 @@
         <h2 class="font-semibold text-xl">Dashboard</h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="grid grid-cols-3 gap-6">
-            <div class="bg-white p-6 shadow-md rounded-md">
-                <h3 class="text-lg font-bold">Total Tasks</h3>
-                <p class="text-4xl">{{ $totalTasks }}</p>
-            </div>
-            <div class="bg-white p-6 shadow-md rounded-md">
-                <h3 class="text-lg font-bold">Pending Tasks</h3>
-                <p class="text-4xl">{{ $pendingTasks }}</p>
-            </div>
-            <div class="bg-white p-6 shadow-md rounded-md">
-                <h3 class="text-lg font-bold">Completed Tasks</h3>
-                <p class="text-4xl">{{ $completedTasks }}</p>
-            </div>
+
+        <div class="mt-8">
+            <a href="{{ route('tasks.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded">View Tasks</a>
+            <a href="{{ route('overview') }}" class="bg-green-500 text-white px-4 py-2 rounded">View Overview</a>
         </div>
     </div>
 </x-app-layout>
