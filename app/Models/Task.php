@@ -14,4 +14,8 @@ class Task extends Model
         'deadline',
         'category'
     ];
+
+    protected $casts = [
+        'deadline' => 'datetime',
+    ];
 }
