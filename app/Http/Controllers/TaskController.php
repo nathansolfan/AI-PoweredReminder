@@ -151,6 +151,10 @@ class TaskController extends Controller
             $tasks->whereNotNull('category');
         }
 
+        $tasks = $tasks->get(); //execute query
+
+        return view('tasks.index', ['tasks' => $tasks, 'filter' => $filter]);
+
 
     }
 }
