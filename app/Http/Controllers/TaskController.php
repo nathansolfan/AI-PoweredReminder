@@ -133,4 +133,24 @@ class TaskController extends Controller
 
         return view('tasks.overview', compact('overdueTasks','todayTasks','upcomingTasks', 'categoryCounts'));
     }
+
+    public function filter(Request $request)
+    {
+        $filter = $request->query('filter'); //get filter from the query
+
+        $tasks = Task::query(); //start a query for the Task model
+
+        // filter logic
+        if ($filter === 'overdue') {
+            $tasks->where('deadline', '<', now());
+        } elseif ($filter === 'today') {
+            $tasks->whereDate('deadline', now());
+        } elseif ($filter === 'upcoming') {
+            $tasks->whereBetween('deadline', [now(), now()->addDays(7)]);
+        } elseif ($filter === 'category') {
+            $tasks->whereNotNull('category');
+        }
+
+
+    }
 }
