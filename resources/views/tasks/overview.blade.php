@@ -21,7 +21,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <!-- Overdue Tasks -->
-                <div class="bg-red-50 dark:bg-red-900 p-6 rounded-lg shadow-md relative">
+                <a href="{{ route('tasks.index', ['filter' => 'overdue']) }}" class="bg-red-50 dark:bg-red-900 p-6 rounded-lg shadow-md relative hover:scale-105 transition-transform">
                     <h3 class="text-lg font-bold text-red-700 dark:text-red-400">🔥 Overdue Tasks</h3>
                     @if($overdueTasks->isEmpty())
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-4">No overdue tasks!</p>
@@ -30,24 +30,15 @@
                             @foreach($overdueTasks->take(3) as $task)
                                 <li class="flex justify-between items-center bg-white dark:bg-gray-800 p-3 rounded-md shadow-sm">
                                     <span class="font-medium text-gray-800 dark:text-gray-100">{{ $task->title }}</span>
-                                    <div class="flex items-center space-x-2">
-                                        <a href="{{ route('tasks.show', $task->id) }}" class="text-blue-500 hover:text-blue-700"><i class="fas fa-eye"></i></a>
-                                        <a href="{{ route('tasks.edit', $task->id) }}" class="text-amber-500 hover:text-amber-700"><i class="fas fa-edit"></i></a>
-                                        <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" onsubmit="return confirm('Are you sure?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="text-rose-500 hover:text-rose-700"><i class="fas fa-trash"></i></button>
-                                        </form>
-                                    </div>
                                 </li>
                             @endforeach
                         </ul>
                     @endif
-                    <a href="{{ route('tasks.index') }}" class="absolute bottom-4 right-4 text-sm text-red-600 hover:underline">View More</a>
-                </div>
+                    <a href="{{ route('tasks.index', ['filter' => 'overdue']) }}" class="absolute bottom-4 right-4 text-sm text-red-600 hover:underline">View More</a>
+                </a>
 
                 <!-- Today's Tasks -->
-                <div class="bg-yellow-50 dark:bg-yellow-900 p-6 rounded-lg shadow-md relative">
+                <a href="{{ route('tasks.index', ['filter' => 'today']) }}" class="bg-yellow-50 dark:bg-yellow-900 p-6 rounded-lg shadow-md relative hover:scale-105 transition-transform">
                     <h3 class="text-lg font-bold text-yellow-700 dark:text-yellow-400">🌞 Today's Tasks</h3>
                     @if($todayTasks->isEmpty())
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-4">No tasks for today!</p>
@@ -60,11 +51,11 @@
                             @endforeach
                         </ul>
                     @endif
-                    <a href="{{ route('tasks.index') }}" class="absolute bottom-4 right-4 text-sm text-yellow-600 hover:underline">View More</a>
-                </div>
+                    <a href="{{ route('tasks.index', ['filter' => 'today']) }}" class="absolute bottom-4 right-4 text-sm text-yellow-600 hover:underline">View More</a>
+                </a>
 
                 <!-- Upcoming Tasks -->
-                <div class="bg-green-50 dark:bg-green-900 p-6 rounded-lg shadow-md relative">
+                <a href="{{ route('tasks.index', ['filter' => 'upcoming']) }}" class="bg-green-50 dark:bg-green-900 p-6 rounded-lg shadow-md relative hover:scale-105 transition-transform">
                     <h3 class="text-lg font-bold text-green-700 dark:text-green-400">📅 Upcoming Tasks</h3>
                     @if($upcomingTasks->isEmpty())
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-4">No upcoming tasks!</p>
@@ -77,11 +68,11 @@
                             @endforeach
                         </ul>
                     @endif
-                    <a href="{{ route('tasks.index') }}" class="absolute bottom-4 right-4 text-sm text-green-600 hover:underline">View More</a>
-                </div>
+                    <a href="{{ route('tasks.index', ['filter' => 'upcoming']) }}" class="absolute bottom-4 right-4 text-sm text-green-600 hover:underline">View More</a>
+                </a>
 
                 <!-- Tasks by Category -->
-                <div class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg shadow-md relative">
+                <a href="{{ route('tasks.index', ['filter' => 'category']) }}" class="bg-blue-50 dark:bg-blue-900 p-6 rounded-lg shadow-md relative hover:scale-105 transition-transform">
                     <h3 class="text-lg font-bold text-blue-700 dark:text-blue-400">📚 Tasks by Category</h3>
                     @if($categoryCounts->isEmpty())
                         <p class="text-sm text-gray-600 dark:text-gray-300 mt-4">No categories available!</p>
@@ -95,8 +86,8 @@
                             @endforeach
                         </ul>
                     @endif
-                    <a href="{{ route('tasks.index') }}" class="absolute bottom-4 right-4 text-sm text-blue-600 hover:underline">View More</a>
-                </div>
+                    <a href="{{ route('tasks.index', ['filter' => 'category']) }}" class="absolute bottom-4 right-4 text-sm text-blue-600 hover:underline">View More</a>
+                </a>
             </div>
         </div>
     </div>
