@@ -92,7 +92,14 @@ class TaskController extends Controller
             'status' => 'required|in:pending, completed',
             'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ]);
+
+        if ($request->hasFile('attachment')) {
+            if ($task->attachment) {
+                \Storage::allDirectories(directory);::disk('public')->delete($task->attachmenet); // Delete the old file
+            }
+        }
 
         $task->update($validated);
         return redirect()->route('tasks.index')->with('success', 'Task updated');
