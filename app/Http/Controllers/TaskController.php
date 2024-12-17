@@ -42,22 +42,21 @@ class TaskController extends Controller
             'status' => 'required|in:pending, completed',
             // 'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
-            'category' => 'nullable|string'
+            'category' => 'nullable|string',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ]);
 
         if (empty($validated['description'])) {
             $validated['description'] = generateAIDescription($validated['title'], $validated['deadline']);
         }
 
+        if ($request->hasFile('attachment')) {
+            $validated['attachment'] = $request->file('attachment')->store('attachments', 'public');
+        }
+
         // Create the task - $task->create($validated);
-        $task = Task::create([
-            'title' => $validated['title'],
-            'description' => $validated['description'],
-            'status' => $validated['status'],
-            // 'priority' => $validated['priority'],
-            'deadline' => $validated['deadline'],
-            'category' => $validated['category'],
-    ]);
+        Task::create($validated);
+
         // redirect
         return redirect()->route('tasks.index')->with('success', 'Task Created');
     }
