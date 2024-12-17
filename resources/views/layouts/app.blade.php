@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="{{ session('dark-mode') ? 'dark' : '' }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -21,8 +21,13 @@
             <!-- Page Heading -->
             @isset($header)
                 <header class="bg-white dark:bg-gray-800 shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
                         {{ $header }}
+                        <!-- Dark Mode Toggle Button -->
+                        <button id="dark-mode-toggle"
+                                class="p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 focus:outline-none">
+                            🌙 / ☀️
+                        </button>
                     </div>
                 </header>
             @endisset
@@ -32,5 +37,22 @@
                 {{ $slot }}
             </main>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const toggleButton = document.querySelector('#dark-mode-toggle');
+
+                // Load stored theme preference
+                if (localStorage.getItem('theme') === 'dark') {
+                    document.documentElement.classList.add('dark');
+                }
+
+                toggleButton.addEventListener('click', function () {
+                    document.documentElement.classList.toggle('dark');
+                    const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                    localStorage.setItem('theme', theme);
+                });
+            });
+        </script>
     </body>
 </html>
