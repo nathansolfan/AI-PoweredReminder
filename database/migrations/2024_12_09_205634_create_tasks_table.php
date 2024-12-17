@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('status', ['pending', 'completed'])->default('pending');
             $table->enum('priority', ['low', 'medium', 'high'])->default('medium');
             $table->date('deadline')->nullable();
+            // new column
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }
