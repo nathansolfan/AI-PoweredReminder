@@ -62,17 +62,11 @@
                             </select>
                         </div>
 
-                        <form method="POST" action="{{ route('tasks.store') }}" enctype="multipart/form-data">
-                            @csrf
-                            <!-- Other fields -->
-                            <div class="mt-4">
-                                <label for="attachment" class="block font-medium text-gray-700">Attachment</label>
-                                <input type="file" name="attachment" id="attachment" class="mt-1 block w-full border-gray-300 rounded-md">
-                            </div>
-                            <button type="submit" class="mt-4 bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700">
-                                Save Task
-                            </button>
-                        </form>
+                        <!-- File Upload -->
+    <div>
+        <label for="attachment" class="block font-medium text-sm text-gray-700">Attachment</label>
+        <input type="file" name="attachment" id="attachment" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
+    </div>
 
 
                         <div class="flex justify-end">
