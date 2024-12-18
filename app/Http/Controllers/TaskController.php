@@ -18,6 +18,10 @@ class TaskController extends Controller
     {
         // 1️⃣ import task model
         $sortField = $request->query('sort_by', 'created_at'); // Default sort by created_at
+        $sortOrder = $request->query('sort_order', 'desc'); // Default sort order descending
+        $filterStatus = $request->query('filter_status');
+
+        $tasks = Task::query();
 
 
 
