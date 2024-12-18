@@ -97,7 +97,7 @@ class TaskController extends Controller
 
         if ($request->hasFile('attachment')) {
             if ($task->attachment) {
-                // \Storage::disk('public')->delete($task->attachmenet); // Delete the old file
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($task->attachment);
             }
         }
 
