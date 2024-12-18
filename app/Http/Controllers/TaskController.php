@@ -14,11 +14,17 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         // 1️⃣ import task model
+        $sortField = $request->query('sort_by', 'created_at'); // Default sort by created_at
+
+
+
         $tasks = Task::all();
         return view('tasks.index', ['tasks' => $tasks]);
+
+
     }
 
     /**
