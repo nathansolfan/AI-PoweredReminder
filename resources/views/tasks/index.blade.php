@@ -11,7 +11,28 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     <div class="flex justify-between items-center mb-6">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Task List</h3>
-                        <a href="{{ route('tasks.create') }}" class="inline-flex items-center px-4 py-2 bg-teal-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition ease-in-out duration-150">+ New Task</a>
+                        <div class="flex items-center space-x-4">
+                            <!-- 🔍 Search Form -->
+                            <form action="{{ route('tasks.index') }}" method="GET" class="flex">
+                                <input
+                                    type="text"
+                                    name="search"
+                                    value="{{ request('search') }}"
+                                    placeholder="Search tasks..."
+                                    class="border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                >
+                                <button
+                                    type="submit"
+                                    class="ml-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    Search
+                                </button>
+                            </form>
+
+                            <a href="{{ route('tasks.create') }}" class="inline-flex items-center px-4 py-2 bg-teal-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-teal-600 focus:outline-none focus:ring-2 focus:ring-teal-500 transition ease-in-out duration-150">
+                                + New Task
+                            </a>
+                        </div>
                     </div>
 
                     @if ($tasks->isEmpty())
