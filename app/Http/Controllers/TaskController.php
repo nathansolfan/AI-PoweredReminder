@@ -16,16 +16,23 @@ class TaskController extends Controller
      */
     public function index(Request $request)
     {
-        // 1️⃣ import task model
+        // 1️⃣ import task model // $tasks = Task::all();
         $sortField = $request->query('sort_by', 'created_at'); // Default sort by created_at
         $sortOrder = $request->query('sort_order', 'desc'); // Default sort order descending
         $filterStatus = $request->query('filter_status');
 
         $tasks = Task::query();
 
+        // apply filters
+        if ($filterStatus) {
+            $tasks->where('status', $filterStatus);
+        }
 
+        // apply sorting
+        $tasks->orderBy($sortField, $sortOrder);
 
-        $tasks = Task::all();
+        $tasks = $tasks->paginate(10);
+
         return view('tasks.index', ['tasks' => $tasks]);
 
 
