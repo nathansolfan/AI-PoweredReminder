@@ -80,6 +80,9 @@
                                                 <button type="submit" class="inline-flex items-center px-3 py-2 text-sm font-medium text-white bg-rose-600 hover:bg-rose-700 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500">
                                                     Delete
                                                 </button>
+                                                <p>
+                                                    banana
+                                                </p>
                                             </form>
                                         </div>
                                     </div>
