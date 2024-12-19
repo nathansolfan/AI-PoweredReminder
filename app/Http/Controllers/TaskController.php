@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use OpenAI\Client;
 
 class TaskController extends Controller
@@ -183,7 +184,20 @@ class TaskController extends Controller
         $tasks = $tasks->get(); //execute query
 
         return view('tasks.index', ['tasks' => $tasks, 'filter' => $filter]);
+    }
 
+    public function deleteAttachment(Task $task)
+    {
+        if ($task->attachment) {
+            // delete  file from storage
+            Storage::disk('public')->delete($task->attachment);
 
+            // remove attachment field from database
+            $task->update(['attachment' => null]);
+
+            return redirect()->back()->with('success', 'Attachment deleted');
+        }
+
+        return redirect()->back()->with('error', 'No attachment found');
     }
 }
