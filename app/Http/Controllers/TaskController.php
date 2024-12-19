@@ -20,22 +20,28 @@ class TaskController extends Controller
         $sortField = $request->query('sort_by', 'created_at'); // Default sort by created_at
         $sortOrder = $request->query('sort_order', 'desc'); // Default sort order descending
         $filterStatus = $request->query('filter_status');
+        $searchQuery = $request->query('search');
 
         $tasks = Task::query();
 
-        // apply filters
+        // 🔍 Apply search filter
+        if (!empty($searchQuery)) {
+            $tasks->where('title', 'LIKE', '%' . $searchQuery . '%');
+        }
+
+
+        // 🎯 Apply status filter
         if ($filterStatus) {
             $tasks->where('status', $filterStatus);
         }
 
-        // apply sorting
+        // 🧹 Apply sorting
         $tasks->orderBy($sortField, $sortOrder);
 
+        // 📋 Paginate results
         $tasks = $tasks->paginate(10);
 
         return view('tasks.index', ['tasks' => $tasks]);
-
-
     }
 
     /**
