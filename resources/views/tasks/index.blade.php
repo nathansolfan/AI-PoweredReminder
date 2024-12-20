@@ -50,10 +50,10 @@
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
                                                     {{ ucfirst($task->status) }}
                                                 </span>
-                                                <strong class="ml-4">Category:</strong>
+                                                <strong class="ml-4">Deadline:</strong>
                                                 <span
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-sky-200 text-sky-800">
-                                                    {{ $task->category ?? 'Uncategorized' }}
+                                                    {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('F j, Y') : 'Uncategorized' }}
                                                 </span>
                                             </p>
 
