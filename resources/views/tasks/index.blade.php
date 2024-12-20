@@ -37,7 +37,7 @@
                         <ul class="divide-y divide-gray-300 dark:divide-gray-700">
                             @foreach ($tasks as $task)
                                 <li class="py-4">
-                                    <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center">
+                                    <div class="flex flex-col lg:flex-row items-center justify-between items-start lg:items-center">
                                         <!-- Task Info -->
                                         <div class="flex-1 lg:w-2/3">
                                             <h4
@@ -57,7 +57,6 @@
                                                 </span>
                                             </p>
 
-                                            <!-- Expandable Description -->
                                             <!-- Expandable Description -->
                                             @if ($task->description)
                                                 <button
