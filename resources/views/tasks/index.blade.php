@@ -30,7 +30,8 @@
                     <!-- Task List -->
                     @if ($tasks->isEmpty())
                         <div class="flex justify-center items-center py-6">
-                            <p class="text-md text-gray-500 dark:text-gray-400">No tasks available. Start by creating one!</p>
+                            <p class="text-md text-gray-500 dark:text-gray-400">No tasks available. Start by creating
+                                one!</p>
                         </div>
                     @else
                         <ul class="divide-y divide-gray-300 dark:divide-gray-700">
@@ -45,20 +46,41 @@
                                             </h4>
                                             <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">
                                                 <strong>Status:</strong>
-                                                <span class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
+                                                <span
+                                                    class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
                                                     {{ ucfirst($task->status) }}
                                                 </span>
                                                 <strong class="ml-4">Category:</strong>
-                                                <span class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-sky-200 text-sky-800">
+                                                <span
+                                                    class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-sky-200 text-sky-800">
                                                     {{ $task->category ?? 'Uncategorized' }}
                                                 </span>
                                             </p>
-                                            {{-- @if ($task->description)
-                                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                                                    {{ Str::limit($task->description, 100, '...') }}
-                                                </p>
-                                            @endif --}}
+
+                                            <!-- Expandable Description -->
+                                            <!-- Expandable Description -->
+                                            @if ($task->description)
+                                                <button
+                                                    class="mt-4 text-sm text-blue-500 hover:underline focus:outline-none focus:ring focus:ring-blue-300"
+                                                    onclick="toggleDescription('{{ $task->id }}')">
+                                                    Show Description
+                                                </button>
+                                                <div id="description-{{ $task->id }}"
+                                                    class="mt-2 mx-auto p-3 max-w-md bg-gray-100 dark:bg-gray-800 text-sm text-gray-600 dark:text-gray-300 rounded-md shadow hidden">
+                                                    {{ $task->description }}
+                                                </div>
+                                            @endif
+
                                         </div>
+
+                                        <script>
+                                            function toggleDescription(id) {
+                                                const description = document.getElementById(`description-${id}`);
+                                                description.classList.toggle('hidden');
+                                            }
+                                        </script>
+
+
 
                                         <!-- Task Actions -->
                                         <div class="mt-4 lg:mt-0 flex justify-center space-x-2">
