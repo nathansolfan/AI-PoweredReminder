@@ -76,16 +76,15 @@
                                                     @endif
 
                                                     <!-- Delete Attachment Button -->
-                                                    <form action="{{ route('tasks.deleteAttachment', $task->id) }}"
-                                                        method="POST"
+                                                    <form action="{{ route('tasks.deleteAttachment', $task->id) }}" method="POST"
                                                         onsubmit="return confirm('Are you sure you want to delete this attachment?')">
                                                         @csrf
                                                         @method('PATCH')
-                                                        <button type="submit"
-                                                            class="text-red-500 hover:text-red-700 underline">
-                                                            Delete Attachment
+                                                        <button type="submit" class="text-red-500 hover:text-red-700">
+                                                            <i class="fas fa-trash"></i>
                                                         </button>
                                                     </form>
+
                                                 </div>
                                             @endif
 
