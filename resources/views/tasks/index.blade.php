@@ -37,7 +37,8 @@
                         <ul class="divide-y divide-gray-300 dark:divide-gray-700">
                             @foreach ($tasks as $task)
                                 <li class="py-4">
-                                    <div class="flex flex-col lg:flex-row items-center justify-between items-start lg:items-center">
+                                    <div
+                                        class="flex flex-col lg:flex-row items-center justify-between items-start lg:items-center">
                                         <!-- Task Info -->
                                         <div class="flex-1 lg:w-2/3">
                                             <h4
@@ -52,8 +53,9 @@
                                                 </span>
                                                 <strong class="ml-4">Deadline:</strong>
                                                 <span
-                                                    class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-sky-200 text-sky-800">
-                                                    {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('F j, Y') : 'Uncategorized' }}
+                                                    class="inline-block px-2 py-1 rounded-full text-xs font-medium
+    {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
+                                                    {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : 'Uncategorized' }}
                                                 </span>
                                             </p>
 
