@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Notifications\TaskDeadlineNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -59,6 +60,9 @@ class TaskController extends Controller
      */
     public function store(Request $request, Task $task)
     {
+        // Notification
+        $user = $request->user();
+
         // 3️⃣
         $validated = $request->validate([
             'title' => 'required',
@@ -79,7 +83,12 @@ class TaskController extends Controller
         }
 
         // Create the task - $task->create($validated);
-        Task::create($validated);
+        $task = Task::create($validated);
+
+        // Notification
+        if ($task->deadline) {
+            $user->notify(new TaskDeadlineNotification($task));
+        }
 
         // redirect
         return redirect()->route('tasks.index')->with('success', 'Task Created');
@@ -199,5 +208,13 @@ class TaskController extends Controller
         }
 
         return redirect()->back()->with('error', 'No attachment found');
+    }
+
+    public function notifications(Request $request)
+    {
+        $user = $request->user();
+
+        $notifications = $user->notifications; // fetch all notifications
+        return view('notifications.email', compact('notifications'));
     }
 }
