@@ -57,6 +57,7 @@
     {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
                                                     {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : 'Uncategorized' }}
                                                 </span>
+
                                             </p>
 
                                             <!-- Expandable Description -->
