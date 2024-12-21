@@ -11,12 +11,16 @@ class TaskDeadlineNotification extends Notification
 {
     use Queueable;
 
+    protected $task; // Declare the property to store the task.
+
+
     /**
      * Create a new notification instance.
      */
-    public function __construct()
+    public function __construct($task)
     {
         //
+        $this->task = $task;
     }
 
     /**
@@ -48,7 +52,10 @@ class TaskDeadlineNotification extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            //
+            'title' => 'Task Deadline Reminder',
+            'message' => 'Your task' . $this->task->title . '"is due on ' . \Carbon\Carbon::parse($this->$task->deadline)->format('F j, Y') . '.',
+            'task_id' => $this->task->id,
+            'deadline' => $this->task->deadline,
         ];
     }
 }
