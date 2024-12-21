@@ -53,7 +53,7 @@ class TaskDeadlineNotification extends Notification
     {
         return [
             'title' => 'Task Deadline Reminder',
-            'message' => 'Your task' . $this->task->title . '"is due on ' . \Carbon\Carbon::parse($this->$task->deadline)->format('F j, Y') . '.',
+            'message' => 'Your task' . $this->task->title . '"is due on ' . \Carbon\Carbon::parse($this->task->deadline)->format('F j, Y') . '.',
             'task_id' => $this->task->id,
             'deadline' => $this->task->deadline,
         ];
