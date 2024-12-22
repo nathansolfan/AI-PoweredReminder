@@ -13,10 +13,10 @@
 
                     @forelse ($notifications as $notification)
                         <div class="border-b py-3">
-                            <p class="text-sm font-semibold">
+                            <p class="text-sm font-semibold {{ $notification->read_at ? 'line-through' : '' }}">
                                 {{ $notification->data['title'] }}
                             </p>
-                            <p class="text-sm">
+                            <p class="text-sm {{ $notification->read_at ? 'line-through' : '' }}">
                                 {{ $notification->data['message'] }}
                             </p>
                             <span class="text-xs text-gray-500">
@@ -26,9 +26,10 @@
                             <form method="POST" action="{{ route('notifications.read', $notification->id) }}">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="text-xs text-blue-500 hover:underline">Mark as Read</button>
+                                <button type="submit" class="text-xs text-blue-500 hover:underline">
+                                    {{ $notification->read_at ? 'Mark as Unread' : 'Mark as Read' }}
+                                </button>
                             </form>
-
                         </div>
                     @empty
                         <p class="text-gray-500">You have no notifications.</p>
