@@ -241,7 +241,13 @@ class TaskController extends Controller
 
         $notification = $user->notifications()->find($id);
         if ($notification) {
-            $notification->markAsRead();
+            if ($notification->read_at) {
+                //if already ready, mark as unread
+                $notification->update(['read_at' => null]);
+            } else {
+                // Mark as read
+                $notification->markAsRead();
+            }
         }
         return redirect()->back();
     }
