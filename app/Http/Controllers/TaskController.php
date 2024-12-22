@@ -234,4 +234,15 @@ class TaskController extends Controller
         $notifications = $user->notifications; // fetch all notifications
         return view('tasks.notifications', compact('notifications'));
     }
+
+    public function markNotificationAsRead(Request $request, $id)
+    {
+        $user = $request->user();
+
+        $notification = $user->notifications()->find($id);
+        if ($notification) {
+            $notification->markAsRead();
+        }
+        return redirect()->back();
+    }
 }
