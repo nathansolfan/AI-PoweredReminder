@@ -22,6 +22,13 @@
                             <span class="text-xs text-gray-500">
                                 {{ $notification->created_at->diffForHumans() }}
                             </span>
+
+                            <form method="POST" action="{{ route('notifications.read', $notification->id) }}">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" class="text-xs text-blue-500 hover:underline">Mark as Read</button>
+                            </form>
+
                         </div>
                     @empty
                         <p class="text-gray-500">You have no notifications.</p>
