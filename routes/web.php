@@ -23,6 +23,8 @@ Route::patch('/tasks/{task}/toggle-status', [TaskController::class, 'toggleStatu
 Route::get('/overview', [TaskController::class, 'overview'])->name('overview');
 Route::get('/tasks{task}/delete-attachment', [TaskController::class, 'deleteAttachment'])->name('tasks.deleteAttachment');
 Route::get('/notifications', [TaskController::class, 'notifications'])->name('notifications');
+Route::patch('/notifications/{id}/read', [TaskController::class, 'markNotificationAsRead'])->name('notifications.read');
+
 
 
 
