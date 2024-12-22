@@ -28,6 +28,11 @@
                                 class="p-2 rounded bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 focus:outline-none">
                             🌙 / ☀️
                         </button>
+                        <a href="{{ route('notifications') }}">
+                            Notifications <span class="bg-red-500 text-white px-2 py-1 rounded">{{ auth()->user()->unreadNotifications->count() }}</span>
+                        </a>
+
+
                     </div>
                 </header>
             @endisset
