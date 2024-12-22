@@ -118,7 +118,6 @@ class TaskController extends Controller
     public function update(Request $request, Task $task)
     {
         // 6️⃣
-
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',
@@ -128,13 +127,31 @@ class TaskController extends Controller
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
         ]);
 
+        // Handle description auto-generation if empty
+        if (empty($validated['description'])) {
+            $validated['description'] = generateAIDescription($validated['title'], $validated['deadline']);
+        }
+
+
+        // Handle file attachment replacement
         if ($request->hasFile('attachment')) {
             if ($task->attachment) {
                 \Illuminate\Support\Facades\Storage::disk('public')->delete($task->attachment);
             }
+
+            // save new attachment
+            $validated['attachment'] = $request->file('attachment')->store('attachments', 'public');
         }
 
+        // update task
         $task->update($validated);
+
+        // notify user deadline is update
+        if ($task->wasChanged('deadline') && $task->deadline) {
+            $request->user()->notify(new TaskDeadlineNotification($task));
+        }
+
+        // redirect
         return redirect()->route('tasks.index')->with('success', 'Task updated');
     }
 
