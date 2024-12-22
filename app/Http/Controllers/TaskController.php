@@ -232,6 +232,6 @@ class TaskController extends Controller
         $user = $request->user();
 
         $notifications = $user->notifications; // fetch all notifications
-        return view('notifications.email', compact('notifications'));
+        return view('tasks.notifications', compact('notifications'));
     }
 }
