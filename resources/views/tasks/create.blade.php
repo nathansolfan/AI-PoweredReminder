@@ -63,10 +63,10 @@
                         </div>
 
                         <!-- File Upload -->
-                        <div>
+                        {{-- <div>
                             <label for="attachment" class="block font-medium text-sm text-gray-700">Attachment</label>
                             <input type="file" name="attachment" id="attachment" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
-                        </div>
+                        </div> --}}
 
 
                         <div class="flex justify-end">
