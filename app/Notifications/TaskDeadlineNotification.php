@@ -39,9 +39,9 @@ class TaskDeadlineNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('The introduction to the notification.')
-                    ->action('Notification Action', url('/'))
-                    ->line('Thank you for using our application!');
+            ->line('The introduction to the notification.')
+            ->action('Notification Action', url('/'))
+            ->line('Thank you for using our application!');
     }
 
     /**
@@ -53,7 +53,7 @@ class TaskDeadlineNotification extends Notification
     {
         return [
             'title' => 'Task Deadline Reminder',
-            'message' => 'Your task' .  $this->task->title . '"is due on ' . \Carbon\Carbon::parse($this->task->deadline)->format('F j, Y') . '.',
+            'message' => 'Your task "' . $this->task->title . '" is due on ' . \Carbon\Carbon::parse($this->task->deadline)->format('F j, Y') . '.',
             'task_id' => $this->task->id,
             'deadline' => $this->task->deadline,
         ];
