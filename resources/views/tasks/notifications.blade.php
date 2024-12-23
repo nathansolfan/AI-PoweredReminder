@@ -12,21 +12,28 @@
                     <h3 class="text-lg font-bold mb-4">Your Notifications</h3>
 
                     @forelse ($notifications as $notification)
-                        <div class="border-b py-3">
-                            <p class="text-sm font-semibold {{ $notification->read_at ? 'line-through' : '' }}">
+                        <div class="border-b py-3 {{ $notification->read_at ? 'bg-gray-100 dark:bg-gray-800' : 'bg-blue-50 dark:bg-blue-900' }}">
+                            <!-- Title -->
+                            <p class="text-md font-bold {{ $notification->read_at ? 'text-gray-500 line-through' : 'text-gray-800 dark:text-white' }}">
                                 {{ $notification->data['title'] }}
                             </p>
-                            <p class="text-sm {{ $notification->read_at ? 'line-through' : '' }}">
+
+                            <!-- Message -->
+                            <p class="text-sm mt-1 {{ $notification->read_at ? 'text-gray-400 line-through' : 'text-gray-600 dark:text-gray-300' }}">
                                 {{ $notification->data['message'] }}
                             </p>
+
+                            <!-- Timestamp -->
                             <span class="text-xs text-gray-500">
                                 {{ $notification->created_at->diffForHumans() }}
                             </span>
 
-                            <form method="POST" action="{{ route('notifications.read', $notification->id) }}">
+                            <!-- Mark as Read/Unread Button -->
+                            <form method="POST" action="{{ route('notifications.read', $notification->id) }}" class="mt-2">
                                 @csrf
                                 @method('PATCH')
-                                <button type="submit" class="text-xs text-blue-500 hover:underline">
+                                <button type="submit"
+                                    class="text-xs bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-md">
                                     {{ $notification->read_at ? 'Mark as Unread' : 'Mark as Read' }}
                                 </button>
                             </form>
