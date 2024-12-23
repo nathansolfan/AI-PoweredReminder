@@ -5,6 +5,14 @@
         </h2>
     </x-slot>
 
+    <!-- Add Breadcrumbs Here -->
+    <div class="py-2">
+        <x-breadcrumbs :links="[
+            'Dashboard' => route('dashboard'),
+            'Tasks' => route('tasks.index'),
+        ]" />
+    </div>
+
     <div class="py-6">
         <div class="max-w-4xl mx-auto sm:px-4 lg:px-6">
             <div class="bg-white dark:bg-gray-900 shadow overflow-hidden sm:rounded-lg">
@@ -31,7 +39,6 @@
                             Create Task
                         </a>
                     </div>
-
 
                     <!-- Task List -->
                     @if ($tasks->isEmpty())
@@ -63,7 +70,6 @@
     {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
                                                     {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : 'Uncategorized' }}
                                                 </span>
-
                                             </p>
 
                                             <!-- Expandable Description -->
@@ -78,7 +84,6 @@
                                                     {{ $task->description }}
                                                 </div>
                                             @endif
-
                                         </div>
 
                                         <script>
@@ -87,8 +92,6 @@
                                                 description.classList.toggle('hidden');
                                             }
                                         </script>
-
-
 
                                         <!-- Task Actions -->
                                         <div class="mt-4 lg:mt-0 flex justify-center space-x-2">
