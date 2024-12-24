@@ -13,7 +13,8 @@ class Task extends Model
         // 'priority',
         'deadline',
         'category',
-        'attachment'
+        'attachment',
+        'parent_id',
     ];
 
     protected $casts = [

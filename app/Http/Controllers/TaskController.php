@@ -71,7 +71,8 @@ class TaskController extends Controller
             // 'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
             'category' => 'nullable|string',
-            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'parent_id' => 'nullable|exists:tasks,id',
         ]);
 
         if (empty($validated['description'])) {
@@ -99,8 +100,8 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        // 4️⃣
-        return view('tasks.show', ['task' => $task]);
+        $subtasks = $task->subtask;
+        return view('tasks.show', compact('task', 'subtasks'));
     }
 
     /**
