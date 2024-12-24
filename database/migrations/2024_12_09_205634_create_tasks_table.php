@@ -20,6 +20,7 @@ return new class extends Migration
             $table->date('deadline')->nullable();
             // new column
             $table->string('attachment')->nullable();
+            $table->foreignId('parent_id')->nullable()->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

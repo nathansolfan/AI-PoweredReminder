@@ -11,8 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('subtasks', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            $table->string('title');
+            $table->enum('status', ['pending', 'completed'])->default('pending');
+            $table->timestamps();
+        });
     }
+
 
     /**
      * Reverse the migrations.
