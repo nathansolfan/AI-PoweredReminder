@@ -121,6 +121,9 @@
                                                 <button type="submit"
                                                     class="bg-rose-600 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-rose-700">
                                                     <i class="fas fa-trash"></i>
+                                                    <p>
+
+                                                    </p>
                                                 </button>
                                             </form>
                                         </div>
