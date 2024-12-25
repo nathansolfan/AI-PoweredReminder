@@ -84,6 +84,21 @@
                                                     {{ $task->description }}
                                                 </div>
                                             @endif
+
+                                            <!-- Subtasks -->
+                                            @if ($task->subtasks->isNotEmpty())
+                                                <h5 class="mt-4 text-sm font-bold">Subtasks:</h5>
+                                                <ul class="ml-4 mt-2">
+                                                    @foreach ($task->subtasks as $subtask)
+                                                        <li class="text-sm flex items-center">
+                                                            <span>{{ $subtask->title }}</span>
+                                                            <span class="text-xs text-gray-500 ml-2">
+                                                                ({{ ucfirst($subtask->status) }})
+                                                            </span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
                                         </div>
 
                                         <script>
@@ -121,9 +136,6 @@
                                                 <button type="submit"
                                                     class="bg-rose-600 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-rose-700">
                                                     <i class="fas fa-trash"></i>
-                                                    <p>
-
-                                                    </p>
                                                 </button>
                                             </form>
                                         </div>
