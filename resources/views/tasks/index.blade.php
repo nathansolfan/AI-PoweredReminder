@@ -59,11 +59,11 @@
                                                 {{ $task->title }}
                                             </h4>
                                             <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                                                <strong>Status:</strong>
+                                                {{-- <strong>Status:</strong>
                                                 <span
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
                                                     {{ ucfirst($task->status) }}
-                                                </span>
+                                                </span> --}}
                                                 <strong class="ml-4">Deadline:</strong>
                                                 <span
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium

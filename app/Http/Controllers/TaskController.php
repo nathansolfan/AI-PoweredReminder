@@ -67,7 +67,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'status' => 'required|in:pending, completed',
+            // 'status' => 'required|in:pending, completed',
             // 'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
             'category' => 'nullable|string',
@@ -122,7 +122,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'nullable',
-            'status' => 'required|in:pending, completed',
+            // 'status' => 'required|in:pending, completed',
             'priority' => 'required|in:low,medium,high',
             'deadline' => 'nullable|date',
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048'
