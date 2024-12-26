@@ -32,23 +32,6 @@
                             <textarea name="description" id="description" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">{{ old('description') }}</textarea>
                         </div>
 
-                        {{-- <div>
-                            <label for="priority" class="block font-medium text-sm text-gray-700">Priority</label>
-                            <select name="priority" id="priority" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
-                                <option value="low" {{ old('priority') == 'low' ? 'selected' : '' }}>Low</option>
-                                <option value="medium" {{ old('priority') == 'medium' ? 'selected' : '' }}>Medium</option>
-                                <option value="high" {{ old('priority') == 'high' ? 'selected' : '' }}>High</option>
-                            </select>
-                        </div> --}}
-
-                        <div>
-                            <label for="status" class="block font-medium text-sm text-gray-700">Status</label>
-                            <select name="status" id="status" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
-                                <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                                <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
-                            </select>
-                        </div>
-
                         <div>
                             <label for="deadline" class="block font-medium text-sm text-gray-700">Deadline</label>
                             <input type="date" name="deadline" id="deadline" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" value="{{ old('deadline') }}" />
@@ -57,27 +40,56 @@
                         <div>
                             <label for="category" class="block font-medium text-sm text-gray-700">Category</label>
                             <select name="category" id="category" class="block w-full mt-1 rounded-md shadow-sm">
-                                <option value="Work" {{old('category') == 'Work' ? 'selected' : ''}}>Work</option>
-                                <option value="Personal" {{old('category') == 'Personal' ? 'selected' : ''}}>Personal</option>
+                                <option value="Work" {{ old('category') == 'Work' ? 'selected' : '' }}>Work</option>
+                                <option value="Personal" {{ old('category') == 'Personal' ? 'selected' : '' }}>Personal</option>
                             </select>
                         </div>
 
-                        <!-- File Upload -->
-                        {{-- <div>
-                            <label for="attachment" class="block font-medium text-sm text-gray-700">Attachment</label>
-                            <input type="file" name="attachment" id="attachment" class="block w-full mt-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600">
-                        </div> --}}
-
-
-                        <div class="flex justify-end">
-                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Create Task</button>
+                        <!-- Subtasks Section -->
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700">Subtasks</label>
+                            <div id="subtasks-container" class="space-y-4 mt-2">
+                                <div class="flex space-x-4">
+                                    <input type="text" name="subtasks[0][title]" class="flex-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" placeholder="Subtask title" />
+                                    <button type="button" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600" onclick="removeSubtask(this)">Remove</button>
+                                </div>
+                            </div>
+                            <button type="button" id="add-subtask-button" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600">
+                                Add Subtask
+                            </button>
                         </div>
-                        <p>
-                            banana
-                        </p>
+
+                        <div class="flex justify-end mt-6">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-white uppercase tracking-widest hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                Create Task
+                            </button>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const subtasksContainer = document.getElementById('subtasks-container');
+            const addSubtaskButton = document.getElementById('add-subtask-button');
+            let subtaskIndex = 1;
+
+            addSubtaskButton.addEventListener('click', function () {
+                const subtaskTemplate = `
+                    <div class="flex space-x-4">
+                        <input type="text" name="subtasks[${subtaskIndex}][title]" class="flex-1 rounded-md shadow-sm border-gray-300 dark:bg-gray-700 dark:border-gray-600" placeholder="Subtask title" />
+                        <button type="button" class="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600" onclick="removeSubtask(this)">Remove</button>
+                    </div>
+                `;
+                subtasksContainer.insertAdjacentHTML('beforeend', subtaskTemplate);
+                subtaskIndex++;
+            });
+        });
+
+        function removeSubtask(button) {
+            button.parentElement.remove();
+        }
+    </script>
 </x-app-layout>
