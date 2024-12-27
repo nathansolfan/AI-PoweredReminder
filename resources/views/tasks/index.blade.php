@@ -72,6 +72,7 @@
                                                 </span>
                                             </p>
 
+
                                             <!-- Expandable Description -->
                                             @if ($task->description)
                                                 <button
