@@ -20,6 +20,7 @@ Route::get('/tasks/filter', [TaskController::class, 'filter'])->name('tasks.filt
 
 Route::resource('tasks', TaskController::class);
 Route::patch('/tasks/{task}/toggle-status', [TaskController::class, 'toggleStatus'])->name('tasks.toggleStatus');
+
 Route::get('/overview', [TaskController::class, 'overview'])->name('overview');
 Route::get('/tasks{task}/delete-attachment', [TaskController::class, 'deleteAttachment'])->name('tasks.deleteAttachment');
 Route::get('/notifications', [TaskController::class, 'notifications'])->name('notifications');
