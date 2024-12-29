@@ -73,18 +73,27 @@ class TaskController extends Controller
             'category' => 'nullable|string',
             'attachment' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:2048',
             'parent_id' => 'nullable|exists:tasks,id',
+            'subtasks.*.title' => 'nullable|string|max:255', // validiation for subTasks
         ]);
 
+        // 2️⃣ Auto-generate description if not provided
         if (empty($validated['description'])) {
             $validated['description'] = generateAIDescription($validated['title'], $validated['deadline']);
         }
 
+        // 3️⃣ Handle file attachment
         if ($request->hasFile('attachment')) {
             $validated['attachment'] = $request->file('attachment')->store('attachments', 'public');
         }
 
-        // Create the task - $task->create($validated);
+        // 4️⃣ Create the main task- $task->create($validated);
         $task = Task::create($validated);
+
+        // 5️⃣ Save subtasks if provided
+        if ($request->has('subtasks')) {
+            # code...
+        }
+
 
         // Notification
         if ($task->deadline) {
