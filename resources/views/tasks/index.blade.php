@@ -59,55 +59,29 @@
                                                 {{ $task->title }}
                                             </h4>
                                             <p class="mt-1 text-sm text-gray-700 dark:text-gray-300">
-                                                {{-- <strong>Status:</strong>
-                                                <span
-                                                    class="inline-block px-2 py-1 rounded-full text-xs font-medium {{ $task->status === 'pending' ? 'bg-yellow-200 text-yellow-800' : 'bg-green-200 text-green-800' }}">
-                                                    {{ ucfirst($task->status) }}
-                                                </span> --}}
                                                 <strong class="ml-4">Deadline:</strong>
                                                 <span
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium
-    {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
+                                {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
                                                     {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : 'Uncategorized' }}
                                                 </span>
                                             </p>
 
-
-                                            <!-- Expandable Description -->
-                                            @if ($task->description)
-                                                <button
-                                                    class="mt-4 text-sm text-blue-500 hover:underline focus:outline-none focus:ring focus:ring-blue-300"
-                                                    onclick="toggleDescription('{{ $task->id }}')">
-                                                    Show Description
-                                                </button>
-                                                <div id="description-{{ $task->id }}"
-                                                    class="mt-2 mx-auto p-3 max-w-md bg-gray-100 dark:bg-gray-800 text-sm text-gray-600 dark:text-gray-300 rounded-md shadow hidden">
-                                                    {{ $task->description }}
-                                                </div>
-                                            @endif
-
                                             <!-- Subtasks -->
+                                            <h5 class="mt-4 text-sm font-bold">Subtasks:</h5>
                                             @if ($task->subtasks->isNotEmpty())
-                                                <h5 class="mt-4 text-sm font-bold">Subtasks:</h5>
                                                 <ul class="ml-4 mt-2">
                                                     @foreach ($task->subtasks as $subtask)
                                                         <li class="text-sm flex items-center">
                                                             <span>{{ $subtask->title }}</span>
-                                                            <span class="text-xs text-gray-500 ml-2">
-                                                                ({{ ucfirst($subtask->status) }})
-                                                            </span>
                                                         </li>
                                                     @endforeach
                                                 </ul>
+                                            @else
+                                                <p class="text-sm text-gray-500 mt-2">No subtasks available for this
+                                                    task.</p>
                                             @endif
                                         </div>
-
-                                        <script>
-                                            function toggleDescription(id) {
-                                                const description = document.getElementById(`description-${id}`);
-                                                description.classList.toggle('hidden');
-                                            }
-                                        </script>
 
                                         <!-- Task Actions -->
                                         <div class="mt-4 lg:mt-0 flex justify-center space-x-2">

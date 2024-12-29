@@ -24,7 +24,7 @@ class TaskController extends Controller
         $filterStatus = $request->query('filter_status');
         $searchQuery = $request->query('search');
 
-        $tasks = Task::query()->whereNull('parent_id');
+        $tasks = Task::query()->whereNull('parent_id')->with('subtasks');
 
         // 🔍 Apply search filter
         if (!empty($searchQuery)) {
