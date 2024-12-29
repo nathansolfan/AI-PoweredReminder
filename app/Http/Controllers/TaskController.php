@@ -24,21 +24,21 @@ class TaskController extends Controller
         $filterStatus = $request->query('filter_status');
         $searchQuery = $request->query('search');
 
-        $tasks = Task::query();
+        $tasks = Task::query()->whereNull('parent_id');
 
         // 🔍 Apply search filter
         if (!empty($searchQuery)) {
             $tasks->where('title', 'LIKE', '%' . $searchQuery . '%');
         }
 
-
         // 🎯 Apply status filter
-        if ($filterStatus) {
-            $tasks->where('status', $filterStatus);
-        }
+        // if ($filterStatus) {
+        //     $tasks->where('status', $filterStatus);
+        // }
 
         // 🧹 Apply sorting
         $tasks->orderBy($sortField, $sortOrder);
+
 
         // 📋 Paginate results
         $tasks = $tasks->paginate(10);
