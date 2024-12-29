@@ -91,16 +91,24 @@ class TaskController extends Controller
 
         // 5️⃣ Save subtasks if provided
         if ($request->has('subtasks')) {
-            # code...
+            foreach ($request->input('subtasks') as $subtask) {
+                if (!empty($subtask['title'])) {
+                    // ->subtask() comes from relationship in model
+                    $task->subtasks()->create([
+                        'title' => $subtask['title'],
+                        'description' => $subtask['description'] ?? null,
+                    ]);
+                }
+            }
         }
 
 
-        // Notification
+        // 6️⃣ Send a notification for tasks with a deadline
         if ($task->deadline) {
             $user->notify(new TaskDeadlineNotification($task));
         }
 
-        // redirect
+        // 7️⃣ Redirect to tasks index
         return redirect()->route('tasks.index')->with('success', 'Task Created');
     }
 
@@ -197,7 +205,7 @@ class TaskController extends Controller
         // Count tasks by category
         $categoryCounts = Task::select('category', DB::raw('count(*) as total'))->groupBy('category')->get();
 
-        return view('tasks.overview', compact('overdueTasks','todayTasks','upcomingTasks', 'categoryCounts'));
+        return view('tasks.overview', compact('overdueTasks', 'todayTasks', 'upcomingTasks', 'categoryCounts'));
     }
 
     public function filter(Request $request)
