@@ -5,8 +5,8 @@
         </h2>
     </x-slot>
 
-    <!-- Add Breadcrumbs Here -->
-    <div class="py-2">
+    <!-- Breadcrumbs -->
+    <div class="py-2 text-center">
         <x-breadcrumbs :links="[
             'Dashboard' => route('dashboard'),
             'Tasks' => route('tasks.index'),
@@ -18,12 +18,12 @@
             <div class="bg-white dark:bg-gray-900 shadow overflow-hidden sm:rounded-lg">
                 <div class="p-4 text-gray-900 dark:text-gray-100">
                     <!-- Task List Title -->
-                    <div class="mb-4 text-center">
+                    <div class="mb-6 text-center">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-gray-200">Task List</h3>
                     </div>
 
-                    <!-- Search Form -->
-                    <div class="mb-6 flex justify-center">
+                    <!-- Search and Create Buttons -->
+                    <div class="mb-6 flex justify-center space-x-4">
                         <form action="{{ route('tasks.index') }}" method="GET" class="flex">
                             <input type="text" name="search" value="{{ request('search') }}"
                                 placeholder="Search tasks..."
@@ -35,7 +35,7 @@
                         </form>
 
                         <a href="{{ route('tasks.create') }}"
-                            class="ml-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+                            class="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
                             Create Task
                         </a>
                     </div>
@@ -49,11 +49,11 @@
                     @else
                         <ul class="divide-y divide-gray-300 dark:divide-gray-700">
                             @foreach ($tasks as $task)
-                                <li class="py-4">
+                                <li class="py-6">
                                     <div
-                                        class="flex flex-col lg:flex-row items-center justify-between items-start lg:items-center">
+                                        class="flex flex-col lg:flex-row items-center justify-between lg:items-center">
                                         <!-- Task Info -->
-                                        <div class="flex-1 lg:w-2/3">
+                                        <div class="flex-1 text-center lg:text-left lg:w-2/3">
                                             <h4
                                                 class="text-md font-bold {{ $task->deadline && $task->deadline < now() ? 'text-red-500' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'text-yellow-500' : 'text-gray-900 dark:text-white') }}">
                                                 {{ $task->title }}
@@ -67,9 +67,16 @@
                                                 </span>
                                             </p>
 
-                                            <!-- Task Description -->
+                                            <!-- Toggleable Task Description -->
                                             @if (!empty($task->description))
-                                                <div class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md">
+                                                <div class="mt-2 text-center">
+                                                    <button type="button" onclick="toggleDescription('{{ $task->id }}')"
+                                                        class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
+                                                        Description
+                                                    </button>
+                                                </div>
+                                                <div id="description-{{ $task->id }}"
+                                                    class="hidden mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md">
                                                     <h5 class="text-sm font-bold text-gray-800 dark:text-gray-200">
                                                         Description:
                                                     </h5>
@@ -139,4 +146,11 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function toggleDescription(id) {
+            const description = document.getElementById(`description-${id}`);
+            description.classList.toggle('hidden');
+        }
+    </script>
 </x-app-layout>
