@@ -67,13 +67,29 @@
                                                 </span>
                                             </p>
 
+                                            <!-- Task Description -->
+                                            @if (!empty($task->description))
+                                                <div class="mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md">
+                                                    <h5 class="text-sm font-bold text-gray-800 dark:text-gray-200">
+                                                        Description:
+                                                    </h5>
+                                                    <p class="text-sm text-gray-700 dark:text-gray-300 mt-1">
+                                                        {{ $task->description }}
+                                                    </p>
+                                                </div>
+                                            @endif
+
                                             <!-- Subtasks -->
                                             <h5 class="mt-4 text-sm font-bold">Subtasks:</h5>
                                             @if ($task->subtasks->isNotEmpty())
                                                 <ul class="ml-4 mt-2">
                                                     @foreach ($task->subtasks as $subtask)
-                                                        <li class="text-sm flex items-center">
-                                                            <span>{{ $subtask->title }}</span>
+                                                        <li class="text-sm flex flex-col">
+                                                            <span class="font-semibold">{{ $subtask->title }}</span>
+                                                            @if (!empty($subtask->description))
+                                                                <span
+                                                                    class="text-xs text-gray-500 mt-1">{{ $subtask->description }}</span>
+                                                            @endif
                                                         </li>
                                                     @endforeach
                                                 </ul>
