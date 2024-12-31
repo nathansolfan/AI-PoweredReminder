@@ -85,6 +85,8 @@
                                                 </div>
                                             @endif
 
+                                            <x-subtasks :subtasks="$task->subtasks" />
+
                                             <!-- Subtasks -->
                                             <h5 class="mt-4 text-sm font-bold">Subtasks:</h5>
                                             @if ($task->subtasks->isNotEmpty())
