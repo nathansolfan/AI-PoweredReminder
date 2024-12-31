@@ -43,15 +43,14 @@
                     <!-- Task List -->
                     @if ($tasks->isEmpty())
                         <div class="flex justify-center items-center py-6">
-                            <p class="text-md text-gray-500 dark:text-gray-400">No tasks available. Start by creating
-                                one!</p>
+                            <p class="text-md text-gray-500 dark:text-gray-400">No tasks available. Start by creating one!</p>
                         </div>
                     @else
                         <ul class="divide-y divide-gray-300 dark:divide-gray-700">
                             @foreach ($tasks as $task)
                                 <li class="py-6">
                                     <div
-                                        class="flex flex-col lg:flex-row items-center justify-between lg:items-center">
+                                        class="flex flex-col lg:flex-row items-center justify-between lg:items-center space-y-4 lg:space-y-0">
                                         <!-- Task Info -->
                                         <div class="flex-1 text-center lg:text-left lg:w-2/3">
                                             <h4
@@ -62,7 +61,7 @@
                                                 <strong class="ml-4">Deadline:</strong>
                                                 <span
                                                     class="inline-block px-2 py-1 rounded-full text-xs font-medium
-                                {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
+                                                    {{ $task->deadline && $task->deadline < now() ? 'bg-red-200 text-red-800' : ($task->deadline && $task->deadline <= now()->addDays(2) ? 'bg-yellow-200 text-yellow-800' : 'bg-sky-200 text-sky-800') }}">
                                                     {{ $task->deadline ? \Carbon\Carbon::parse($task->deadline)->format('Y-m-d') : 'Uncategorized' }}
                                                 </span>
                                             </p>
@@ -71,12 +70,12 @@
                                             @if (!empty($task->description))
                                                 <div class="mt-2 text-center">
                                                     <button type="button" onclick="toggleDescription('{{ $task->id }}')"
-                                                        class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600">
-                                                        Description
+                                                        class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                                        {{ __('Description') }}
                                                     </button>
                                                 </div>
                                                 <div id="description-{{ $task->id }}"
-                                                    class="hidden mt-2 p-2 bg-gray-100 dark:bg-gray-800 rounded-md">
+                                                    class="hidden mt-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-md shadow transition-all duration-300 ease-in-out">
                                                     <h5 class="text-sm font-bold text-gray-800 dark:text-gray-200">
                                                         Description:
                                                     </h5>
@@ -91,39 +90,70 @@
                                             @if ($task->subtasks->isNotEmpty())
                                                 <ul class="ml-4 mt-2">
                                                     @foreach ($task->subtasks as $subtask)
-                                                        <li class="text-sm flex flex-col">
-                                                            <span class="font-semibold">{{ $subtask->title }}</span>
-                                                            @if (!empty($subtask->description))
+                                                        <li class="text-sm flex items-center justify-between mt-2">
+                                                            <!-- Subtask Title -->
+                                                            <div class="flex items-center space-x-2">
                                                                 <span
-                                                                    class="text-xs text-gray-500 mt-1">{{ $subtask->description }}</span>
-                                                            @endif
+                                                                    class="font-semibold {{ $subtask->status === 'completed' ? 'line-through text-gray-500' : '' }}">
+                                                                    {{ $subtask->title }}
+                                                                </span>
+                                                                @if (!empty($subtask->description))
+                                                                    <span class="text-xs text-gray-500">{{ $subtask->description }}</span>
+                                                                @endif
+                                                            </div>
+
+                                                            <!-- Subtask Actions -->
+                                                            <div class="flex items-center space-x-2">
+                                                                <!-- Toggle Completion -->
+                                                                <form action="{{ route('subtasks.toggleStatus', $subtask->id) }}" method="POST">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <button type="submit"
+                                                                        class="text-sm px-2 py-1 bg-teal-500 text-white rounded-md hover:bg-teal-600 focus:outline-none">
+                                                                        {{ $subtask->status === 'pending' ? 'Complete' : 'Reopen' }}
+                                                                    </button>
+                                                                </form>
+
+                                                                <!-- Delete Subtask -->
+                                                                <form action="{{ route('subtasks.destroy', $subtask->id) }}" method="POST"
+                                                                    onsubmit="return confirm('Are you sure you want to delete this subtask?')">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button type="submit"
+                                                                        class="text-sm px-2 py-1 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none">
+                                                                        Delete
+                                                                    </button>
+                                                                </form>
+                                                            </div>
                                                         </li>
                                                     @endforeach
                                                 </ul>
                                             @else
-                                                <p class="text-sm text-gray-500 mt-2">No subtasks available for this
-                                                    task.</p>
+                                                <p class="text-sm text-gray-500 mt-2">No subtasks available for this task.</p>
                                             @endif
                                         </div>
 
                                         <!-- Task Actions -->
-                                        <div class="mt-4 lg:mt-0 flex justify-center space-x-2">
+                                        <div class="flex justify-center space-x-2">
                                             <form action="{{ route('tasks.toggleStatus', $task->id) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <button type="submit"
-                                                    class="bg-teal-600 text-white flex items-center justify-center w-24 h-10 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500">
+                                                    class="bg-teal-600 text-white px-4 py-2 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                                                    title="Mark as {{ $task->status === 'pending' ? 'Complete' : 'Pending' }}">
                                                     {{ $task->status === 'pending' ? 'Complete' : 'Reopen' }}
                                                 </button>
                                             </form>
 
                                             <a href="{{ route('tasks.edit', $task->id) }}"
-                                                class="bg-amber-500 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-amber-600">
+                                                class="bg-amber-500 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-amber-600"
+                                                title="Edit Task">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
                                             <a href="{{ route('tasks.show', $task->id) }}"
-                                                class="bg-sky-500 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-sky-600">
+                                                class="bg-sky-500 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-sky-600"
+                                                title="View Task">
                                                 <i class="fas fa-eye"></i>
                                             </a>
 
@@ -132,7 +162,8 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="bg-rose-600 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-rose-700">
+                                                    class="bg-rose-600 text-white flex items-center justify-center w-10 h-10 rounded-md hover:bg-rose-700"
+                                                    title="Delete Task">
                                                     <i class="fas fa-trash"></i>
                                                 </button>
                                             </form>
