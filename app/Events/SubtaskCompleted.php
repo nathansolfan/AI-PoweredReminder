@@ -22,7 +22,7 @@ class SubtaskCompleted
      */
     public function __construct(Subtask $subtask)
     {
-        //
+        $this->subtask = $subtask;
     }
 
     /**
