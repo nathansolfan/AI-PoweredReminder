@@ -2,6 +2,8 @@
 
 namespace App\Events;
 
+use App\Models\Subtask;
+use App\View\Components\Subtasks;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -14,10 +16,11 @@ class SubtaskCompleted
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $subtask;
     /**
      * Create a new event instance.
      */
-    public function __construct()
+    public function __construct(Subtask $subtask)
     {
         //
     }
