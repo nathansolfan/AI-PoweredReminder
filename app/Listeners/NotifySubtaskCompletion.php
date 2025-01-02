@@ -6,6 +6,7 @@ use App\Events\SubtaskCompleted;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Notification as FacadesNotification;
 
 class NotifySubtaskCompletion
 {
@@ -24,6 +25,6 @@ class NotifySubtaskCompletion
     {
         // Send a notification to the user
         $user = $event->subtask->task->user();
-        Notification::send($user, new SubtaskCompleted($event->subtask));
+        FacadesNotification::send($user, new SubtaskCompleted($event->subtask));
     }
 }
